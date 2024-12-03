@@ -37,7 +37,6 @@ public class PlayButton {
 		}
 		if(gamePanel.mouseHandler.mouseReleased && hitbox.contains(mousePos)) {
 			gamePanel.startGame();
-			System.out.println("ln. 40, PlayButton.javba");
 		}
 		gamePanel.mouseHandler.mouseReleased = false;
 		graphics2D.drawImage(currentImage, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);

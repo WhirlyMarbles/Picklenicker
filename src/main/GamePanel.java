@@ -1,6 +1,5 @@
 package main;
 
-import assets.PNReader;
 import entity.Entity;
 import entity.Pickle;
 import entity.Player;
@@ -15,13 +14,16 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.prefs.Preferences;
 
 public class GamePanel extends JPanel implements Runnable {
+	// user prefs
+	Preferences prefs = Preferences.userNodeForPackage(GamePanel.class);
+	
 	//yey
 	public JFrame window;
 	
 	// pnread
-	PNReader pnr = new PNReader();
 	HashMap<String, Integer> difficultySettings = new HashMap<>();
 	
 	// log
@@ -42,6 +44,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int[] SCREEN_SIZE = new int[] {1000, 600};
 	public final int SCREEN_WIDTH = SCREEN_SIZE[0];
 	public final int SCREEN_HEIGHT = SCREEN_SIZE[1];
+	
+	public int highscore;
 	
 	// thread vars
 	double FPS = 240;
@@ -91,13 +95,16 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	public String difficulty;
 	public GamePanel() {
+		this.difficulty = prefs.get("difficulty", "normal");
+		this.highscore = prefs.getInt("highscore", 0);
+		
 		this.mouseHandler = new MouseHandler();
 		this.addMouseListener(mouseHandler);
 		
 		this.difficultySettings.put("easy", 3);
 		this.difficultySettings.put("normal", 6);
 		this.difficultySettings.put("hard", 10);
-		this.difficulty = pnr.readPNS("user.pns").difficulty;
+		this.difficulty = "normal";
 		
 		this.ui = new PicklenickerUserInterface(this);
 		this.LOGGER = new Logger("game panel (constructor)");
@@ -112,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	public void startGame() {
 		gameStarted = true;
-		pickleInit = new PickleAdmin(this, difficultySettings.get(difficulty));
+		pickleInit = new PickleAdmin(this, 4);
 	}
 	/**
 	 * Updates the game state. This method is responsible for updating the player's position,
@@ -128,6 +135,8 @@ public class GamePanel extends JPanel implements Runnable {
 			System.exit(0);
 		}
 		if(running && gameStarted) {
+			prefs.putInt("highscore", Math.max(player.points, highscore));
+			highscore = prefs.getInt("highscore", 0);
 			player.update();
 			ArrayList<Pickle> toAdd = new ArrayList<>(); // Temporary list for new pickles
 			synchronized (pickles) {
@@ -167,7 +176,7 @@ public class GamePanel extends JPanel implements Runnable {
 		pickles = new ArrayList<>();
 		player = new Player(this, keyHandler);
 		pickleInit = new PickleAdmin(this, difficultySettings.get(difficulty));
-		running = false;
+		running = true;
 		gameStarted = false;
 	}
 	public void paintComponent(Graphics graphics) {
