@@ -24,7 +24,7 @@ public class BackToGameButton {
 			this.imagec = ImageIO.read(getClass().getResourceAsStream("/img/ui/back_to_title_pressed.png"));
 		}
 		catch(IOException error) {
-			LOGGER.warn("can't load image file");
+			LOGGER.warn("can't load image file for BackToGameButton.java");
 		}
 	}
 	public void update(Graphics2D graphics2D, int opacity) {
@@ -42,7 +42,7 @@ public class BackToGameButton {
 			gamePanel.reset();
 		}
 		gamePanel.mouseHandler.mouseReleased = false;
-		graphics2D.drawImage(currentImage, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+		graphics2D.drawImage(currentImage, hitbox.x, hitbox.y, hitbox.width+1, hitbox.height, null);
 		graphics2D.setColor(new Color(0, 0, 0, Math.max(255 - opacity, 0)));
 		graphics2D.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 	}

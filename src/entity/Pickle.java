@@ -10,14 +10,15 @@ public class Pickle extends Entity {
 	BufferedImage image;
 	KeyHandler keyHandler;
 	GamePanel gamePanel;
-	public Pickle(GamePanel gamePanel, KeyHandler keyHandler, BufferedImage image, int x, int y) {
+	public Pickle(GamePanel gamePanel, KeyHandler keyHandler, BufferedImage image, int x, int y, int size) {
 		this.keyHandler = keyHandler;
 		this.gamePanel = gamePanel;
 		
 		this.image = image;
 		this.hitbox = new Rectangle();
-		this.hitbox.x = x;this.hitbox.y = y;this.hitbox.width=16;this.hitbox.height=48;
-		this.speed = 1;
+		this.hitbox.x = x;this.hitbox.y = y;
+		this.x = x;this.y = y;this.hitbox.width=size/2;this.hitbox.height=size/2*3;
+		this.speed = 0.5;
 	}
 	public void draw(Graphics2D graphics2D) {
 		if(keyHandler.TPressed) {
@@ -27,6 +28,7 @@ public class Pickle extends Entity {
 		graphics2D.drawImage(image, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
 	}
 	public void update() {
-		hitbox.y += speed;
+		y += speed;
+		hitbox.y = (int) y;
 	}
 }

@@ -44,7 +44,7 @@ public class Player extends Entity {
 		graphics2D.drawImage(image, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
 	}
 	private void init() {
-		speed = 3;
+		speed = 1;
 		hitbox.y = gamePanel.SCREEN_HEIGHT - hitbox.height;
 		hitbox.x = gamePanel.SCREEN_WIDTH / 2 - hitbox.width / 2;
 		getPlayerImage();
@@ -61,7 +61,7 @@ public class Player extends Entity {
 	public void update() {
 		if(keyHandler.DPressed) {direction = "right";}
 		if(keyHandler.APressed) {direction = "left";}
-		if(powered>0) {speed=8;powered--;}else{speed=4;}
+		if(powered>0) {speed=1;powered--;}else{speed=2;}
 		switch(direction) {
 			case "right":
 				hitbox.x += speed;
