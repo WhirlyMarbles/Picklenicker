@@ -1,7 +1,5 @@
 package logger;
 
-import pnarchive.ColoredOutput;
-
 import java.util.ArrayList;
 
 public class Logger {

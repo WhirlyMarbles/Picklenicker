@@ -1,4 +1,4 @@
-package pnarchive;
+package logger;
 
 public class ColoredOutput {
 	static final String FGBLACK = "\033[30m";
