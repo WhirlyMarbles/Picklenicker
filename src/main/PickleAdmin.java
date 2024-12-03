@@ -25,16 +25,17 @@ public class PickleAdmin {
 		for(int i = 0;i < pickles;i++) {
 			gamePanel.pickles.add(new Pickle(gamePanel, gamePanel.keyHandler, pickleImg,
 					randomE.nextInt(0, gamePanel.SCREEN_WIDTH - 16),
-					randomE.nextInt(-500, -48), randomE.nextInt(16,48))
+					randomE.nextInt(-500, -48), randomE.nextInt(48,96))
 			);
 		}
 		gamePanel.pickles.add(new PowerUp(gamePanel.keyHandler, gamePanel, randomE.nextInt(0, gamePanel.SCREEN_WIDTH-16), randomE.nextInt(-1000, -16), "anonymous powerup"));
 	}
 	public Pickle getPickle() {
+		int scale = randomE.nextInt(48, 96);
 		return(new Pickle(gamePanel, gamePanel.keyHandler, pickleImg,
 				randomE.nextInt(0, gamePanel.SCREEN_WIDTH),
-				randomE.nextInt(-1000, -48),
-				randomE.nextInt(16, 48)
+				randomE.nextInt(-1000, -(scale / 2 * 3)),
+				scale
 		));
 	}
 }

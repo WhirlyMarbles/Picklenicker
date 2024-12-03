@@ -47,6 +47,7 @@ public class Player extends Entity {
 		speed = 1;
 		hitbox.y = gamePanel.SCREEN_HEIGHT - hitbox.height;
 		hitbox.x = gamePanel.SCREEN_WIDTH / 2 - hitbox.width / 2;
+		y=gamePanel.SCREEN_HEIGHT - hitbox.height;x=gamePanel.SCREEN_WIDTH / 2 - hitbox.width / 2;
 		getPlayerImage();
 	}
 	private void getPlayerImage() {
@@ -61,20 +62,25 @@ public class Player extends Entity {
 	public void update() {
 		if(keyHandler.DPressed) {direction = "right";}
 		if(keyHandler.APressed) {direction = "left";}
-		if(powered>0) {speed=1;powered--;}else{speed=2;}
+		if(powered>0) {speed=6;powered--;}else{speed=4;}
 		switch(direction) {
 			case "right":
-				hitbox.x += speed;
+				x += speed;
 				break;
 			case "left":
-				hitbox.x -= speed;
+				x -= speed;
 				break;
 		}
+		sync();
 		if(hitbox.x > gamePanel.SCREEN_WIDTH) {
-			hitbox.x = -hitbox.width;
+			x = -hitbox.width;
+			sync();
 		}
 		if(hitbox.x < -hitbox.width) {
-			hitbox.x = gamePanel.SCREEN_WIDTH;
+			x = gamePanel.SCREEN_WIDTH;
+			sync();
 		}
+	}public void sync() {
+		hitbox.x = (int) x;
 	}
 }

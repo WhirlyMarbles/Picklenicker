@@ -38,6 +38,6 @@ public class PowerUp extends Entity {
 			gamePanel.player.powered += 1500;
 		}
 		hitbox.x = randome.nextInt(0, gamePanel.SCREEN_WIDTH-16);
-		hitbox.y = randome.nextInt(-2000, -16);
+		hitbox.y = randome.nextInt(-6000, -16);
 	}
 }
