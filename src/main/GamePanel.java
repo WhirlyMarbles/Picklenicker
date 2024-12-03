@@ -142,7 +142,7 @@ public class GamePanel extends JPanel implements Runnable {
 						player.points++;
 					} else if (pickle.hitbox.y >= SCREEN_HEIGHT && pickle instanceof Pickle) {
 						iterator.remove(); // Safe removal using Iterator
-						for(int i = 0; i<pickleInit.randomE.nextInt(-3,3); i++) {
+						for(int i = 0; i<pickleInit.randomE.nextInt(1,3); i++) {
 							toAdd.add(pickleInit.getPickle());
 						}
 						if(player.powered==0){

@@ -82,8 +82,8 @@ public class PicklenickerUserInterface {
 			if(gameOverFGOpacity<255){gameOverFGOpacity+=2;}
 			graphics2D.setColor(new Color(255, 0, 0, Math.min(gameOverFGOpacity, 255)));
 			graphics2D.drawString("GAME OVER", x, y);
+			backToTitleButton.update(graphics2D, gameOverFGOpacity);
 		}
-		backToTitleButton.update(graphics2D);
 	}
 	public void drawTitleScreen(Graphics2D graphics2D) {
 		graphics2D.drawImage(picklenicker, (gamePanel.SCREEN_WIDTH - 512) / 2, 64, 512, 128, null);

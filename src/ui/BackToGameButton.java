@@ -27,7 +27,7 @@ public class BackToGameButton {
 			LOGGER.warn("can't load image file");
 		}
 	}
-	public void update(Graphics2D graphics2D) {
+	public void update(Graphics2D graphics2D, int opacity) {
 		Point mousePos = MouseInfo.getPointerInfo().getLocation();
 		Point frameLocation = gamePanel.window.getLocationOnScreen();
 		Insets insets = gamePanel.window.getInsets();
@@ -43,5 +43,7 @@ public class BackToGameButton {
 		}
 		gamePanel.mouseHandler.mouseReleased = false;
 		graphics2D.drawImage(currentImage, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);
+		graphics2D.setColor(new Color(0, 0, 0, Math.max(255 - opacity, 0)));
+		graphics2D.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 	}
 }

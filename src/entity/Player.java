@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
-	public int hp = 1;
 	public int points = 0;
 	public final int MAX_HP = 20;
+	public int hp = MAX_HP;
 	public BufferedImage left, right;
 	public String direction = "";
 	
