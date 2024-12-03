@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Player extends Entity {
 	public int points = 0;
 	public final int MAX_HP = 20;
-	public int hp = 1;
+	public int hp = 20;
 	public BufferedImage left, right;
 	public String direction = "";
 	
