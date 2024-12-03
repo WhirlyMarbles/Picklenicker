@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Picklenicker:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Picklenicker_jar</output-path>
+    <root id="archive" name="Picklenicker.jar">
+      <element id="module-output" name="Picklenicker" />
+    </root>
+  </artifact>
+</component>
