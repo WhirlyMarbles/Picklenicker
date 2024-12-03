@@ -1,10 +1,12 @@
 package logger;
 
+import pnarchive.ColoredOutput;
+
 import java.util.ArrayList;
 
 public class Logger {
 	private final String BOLD = "\033[1m";
-	private final String RESET = "\033[0m";
+	private final String RESET_BOLD = "\033[0m";
 	String id;
 	public ArrayList<String> logs = new ArrayList<>();
 	public Logger(String loggerid) {
@@ -12,20 +14,30 @@ public class Logger {
 		this.info("created logger <" + loggerid + ">");
 	}
 	public void info(String msg) {
-		System.out.println(id + ": " + msg);
+		System.out.println(BOLD + "{" + id + "}: " + RESET_BOLD + msg);
 		logs.add(msg);
 	}
 	public void error(String error) {
-		System.out.println("error caught from " + id + ":\n" + error);
+		ColoredOutput.printText("error caught from " + id + ":\n	" + error + "\n", "red", "");
 	}
 	public void warn(String warning) {
-		System.out.println(id + " warns:\n" + warning);
+		ColoredOutput.printText("warning from " + id + ":\n	" + warning + "\n", "yellow", "");
 	}
 	public ArrayList<String> dispose() {
 		return(logs);
 	}
 	public void debug(String msg) {
-		System.out.print(BOLD + "[DEBUG] " + RESET);
+		System.out.print(BOLD + "[DEBUG] " + RESET_BOLD);
 		info(msg);
+	}
+	public LoggerData getLoggerInfo() {
+		return(new LoggerData(id, dispose()));
+	}
+	public class LoggerData {
+		public String name;
+		public ArrayList<String> logs;
+		public LoggerData(String name, ArrayList<String> logs) {
+			this.name=name;this.logs=logs;
+		}
 	}
 }
