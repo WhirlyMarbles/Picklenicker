@@ -118,8 +118,12 @@ public class GamePanel extends JPanel implements Runnable {
 		this.player = new Player(this, this.keyHandler);
 	}
 	public void startGame() {
+		if(difficulty.equals("HACKED")) {
+			player.MAX_HP = 1000;
+		}
 		gameStarted = true;
 		pickleInit = new PickleAdmin(this, 4);
+		player.hp = player.MAX_HP;
 	}
 	/**
 	 * Updates the game state. This method is responsible for updating the player's position,
