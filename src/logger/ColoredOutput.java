@@ -19,7 +19,7 @@ public class ColoredOutput {
 	static final String BGWHITE = "\033[47m";
 	static final String RESET = "\033[0m";
 	public static void printText(String msg, String fg, String bg) {
-		String bgc = switch(fg.toLowerCase()) {
+		String fgc = switch(fg.toLowerCase()) {
 			case "black" -> FGBLACK;
 			case "red" -> FGRED;
 			case "green" -> FGGREEN;
@@ -30,7 +30,7 @@ public class ColoredOutput {
 			case "white" -> FGWHITE;
 			default -> "";
 		};
-		String fgc = switch(bg.toLowerCase()) {
+		String bgc = switch(bg.toLowerCase()) {
 			case "black" -> BGBLACK;
 			case "red" -> BGRED;
 			case "green" -> BGGREEN;
