@@ -18,7 +18,7 @@ import java.util.prefs.Preferences;
 
 public class GamePanel extends JPanel implements Runnable {
 	// user prefs
-	Preferences prefs = Preferences.userNodeForPackage(GamePanel.class);
+	Preferences prefs = Preferences.userNodeForPackage(Picklenicker.class);
 	
 	//yey
 	public JFrame window;
@@ -107,8 +107,8 @@ public class GamePanel extends JPanel implements Runnable {
 		this.difficulty = "normal";
 		
 		this.ui = new PicklenickerUserInterface(this);
-		this.LOGGER = new Logger("game panel (constructor)");
-		this.LOGGER.info("started GamePanel from constructor (obviously)");
+		this.LOGGER = new Logger("game panel");
+		this.LOGGER.debug("testing local logger");
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(new Color(128, 128, 255));
 		this.setDoubleBuffered(true);

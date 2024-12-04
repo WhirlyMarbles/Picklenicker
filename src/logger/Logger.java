@@ -9,7 +9,6 @@ public class Logger {
 	public ArrayList<String> logs = new ArrayList<>();
 	public Logger(String loggerid) {
 		id = loggerid;
-		this.info("created logger <" + loggerid + ">");
 	}
 	public void info(String msg) {
 		System.out.println(BOLD + "{" + id + "}: " + RESET_BOLD + msg);
@@ -25,8 +24,9 @@ public class Logger {
 		return(logs);
 	}
 	public void debug(String msg) {
-		System.out.print(BOLD + "[DEBUG] " + RESET_BOLD);
-		info(msg);
+		System.out.print(BOLD+"{"+id+"}");
+		ColoredOutput.printText(" [DEBUG] "+RESET_BOLD, "cyan", "");
+		System.out.println(msg);
 	}
 	public LoggerData getLoggerInfo() {
 		return(new LoggerData(id, dispose()));
