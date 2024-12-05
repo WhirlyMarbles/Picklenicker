@@ -80,7 +80,8 @@ public class Player extends Entity {
 			x = gamePanel.SCREEN_WIDTH;
 			sync();
 		}
-	}public void sync() {
+	}
+	public void sync() {
 		hitbox.x = (int) x;
 	}
 }
