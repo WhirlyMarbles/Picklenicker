@@ -73,7 +73,7 @@ public class Player extends Entity {
 		}
 		sync();
 		if(hitbox.x > gamePanel.SCREEN_WIDTH) {
-			x = -hitbox.width;
+			x = gamePanel.SCREEN_WIDTH;
 			sync();
 		}
 		if(hitbox.x < -hitbox.width) {
