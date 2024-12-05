@@ -28,6 +28,11 @@ public class Logger {
 		ColoredOutput.printText(" [DEBUG] "+RESET_BOLD, "cyan", "");
 		System.out.println(msg);
 	}
+	public void debug(String msg, String src) {
+		System.out.print(BOLD+"{"+id+"}");
+		ColoredOutput.printText(" [DEBUG] "+RESET_BOLD, "cyan", "");
+		System.out.println(msg + " (" + src + ")");
+	}
 	public LoggerData getLoggerInfo() {
 		return(new LoggerData(id, dispose()));
 	}
