@@ -142,7 +142,7 @@ public class GamePanel extends JPanel implements Runnable {
 			prefs.putInt("highscore", Math.max(player.points, highscore));
 			highscore = prefs.getInt("highscore", 0);
 			player.update();
-			ArrayList<Pickle> toAdd = new ArrayList<>(); // Temporary list for new pickles
+			ArrayList<Pickle> toAdd = new ArrayList<>();
 			synchronized (pickles) {
 				Iterator<Entity> iterator = pickles.iterator();
 				while (iterator.hasNext()) {
