@@ -31,6 +31,7 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 	public boolean NPressed = false;
 	public boolean MPressed = false;
 	public boolean spacePressed = false;
+	public boolean enterPressed = false;
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -62,6 +63,7 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_N) {NPressed = true;}
 		if(kCode == KeyEvent.VK_M) {MPressed = true;}
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = true;}
+		if(kCode == KeyEvent.VK_ENTER) {enterPressed = true;}
 	}
 	
 	@Override
@@ -94,5 +96,6 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_N) {NPressed = false;}
 		if(kCode == KeyEvent.VK_M) {MPressed = false;}
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = false;}
+		if(kCode == KeyEvent.VK_ENTER) {enterPressed = false;}
 	}
 }

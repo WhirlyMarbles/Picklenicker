@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public PicklenickerUserInterface ui;
 	
 	// handle keys
-	KeyHandler keyHandler = new KeyHandler();
+	public KeyHandler keyHandler = new KeyHandler();
 	
 	//panel constants
 	public final int[] SCREEN_SIZE = new int[] {1000, 600};
@@ -122,18 +122,10 @@ public class GamePanel extends JPanel implements Runnable {
 			player.MAX_HP = 1000;
 		}
 		gameStarted = true;
-		pickleInit = new PickleAdmin(this, 4);
+		pickles = new ArrayList<>();
+		pickleInit = new PickleAdmin(this, difficultySettings.get(difficulty));
 		player.hp = player.MAX_HP;
 	}
-	/**
-	 * Updates the game state. This method is responsible for updating the player's position,
-	 * handling key inputs, and checking interactions between the player and the pickles.
-	 * It also manages the removal of pickles when they collide with the player or go out of bounds.
-	 * New pickles are generated after collisions.
-	 *
-	 * @see Player#update()
-	 * @see Pickle#update()
-	 */
 	public void update() {
 		if (keyHandler.BPressed) {
 			System.exit(0);

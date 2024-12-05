@@ -13,6 +13,7 @@ public class PlayButton {
 	GamePanel gamePanel;
 	Rectangle hitbox;
 	Logger LOGGER;
+	boolean enterWasPressed = false;
 	public PlayButton(GamePanel gamePanel, Rectangle hitbox) {
 		this.LOGGER = new Logger("PlayButton");
 		this.gamePanel = gamePanel;
@@ -32,11 +33,13 @@ public class PlayButton {
 		mousePos.x -= frameLocation.x + insets.left;
 		mousePos.y -= frameLocation.y + insets.top;
 		BufferedImage currentImage = image;
-		if(gamePanel.mouseHandler.mousePressed && hitbox.contains(mousePos)) {
+		if(gamePanel.mouseHandler.mousePressed && hitbox.contains(mousePos) || gamePanel.keyHandler.enterPressed) {
 			currentImage = imagec;
+			enterWasPressed = true;
 		}
-		if(gamePanel.mouseHandler.mouseReleased && hitbox.contains(mousePos)) {
+		if(gamePanel.mouseHandler.mouseReleased && hitbox.contains(mousePos) || (enterWasPressed && (!gamePanel.keyHandler.enterPressed))) {
 			gamePanel.startGame();
+			enterWasPressed = false;
 		}
 		gamePanel.mouseHandler.mouseReleased = false;
 		graphics2D.drawImage(currentImage, hitbox.x, hitbox.y, hitbox.width, hitbox.height, null);

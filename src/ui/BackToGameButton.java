@@ -14,6 +14,7 @@ public class BackToGameButton {
 	Rectangle hitbox;
 	Logger LOGGER;
 	PicklenickerUserInterface pnui;
+	boolean enterWasPressed = false;
 	public BackToGameButton(GamePanel gamePanel, Rectangle hitbox, PicklenickerUserInterface pnui) {
 		this.LOGGER = new Logger("PlayButton");
 		this.pnui = pnui;
@@ -34,11 +35,13 @@ public class BackToGameButton {
 		mousePos.x -= frameLocation.x + insets.left;
 		mousePos.y -= frameLocation.y + insets.top;
 		BufferedImage currentImage = image;
-		if(gamePanel.mouseHandler.mousePressed && hitbox.contains(mousePos)) {
+		if(gamePanel.mouseHandler.mousePressed && hitbox.contains(mousePos) || gamePanel.keyHandler.enterPressed) {
 			currentImage = imagec;
+			enterWasPressed = true;
 		}
-		if(gamePanel.mouseHandler.mouseReleased && hitbox.contains(mousePos)) {
+		if(gamePanel.mouseHandler.mouseReleased && hitbox.contains(mousePos) || (enterWasPressed && (!gamePanel.keyHandler.enterPressed))) {
 			pnui.gameOverFGOpacity=0;pnui.gameOverBGOpacity=0;
+			enterWasPressed = false;
 			gamePanel.reset();
 		}
 		gamePanel.mouseHandler.mouseReleased = false;
