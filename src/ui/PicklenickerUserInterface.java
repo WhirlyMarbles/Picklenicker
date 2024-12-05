@@ -69,7 +69,7 @@ public class PicklenickerUserInterface {
 		graphics2D.setColor(new Color(0, 0, 0, 255));
 		graphics2D.drawString("High: "+gamePanel.highscore, x, y);
 		graphics2D.setColor(Color.BLUE);
-		graphics2D.fillRect(-20, 50, gamePanel.player.powered / 6 - 32, 64);
+		graphics2D.fillRect(0, 50, (gamePanel.player.powered / 6)-32, 64);
 		if(gamePanel.player.powered>0){graphics2D.drawImage(powerup, (gamePanel.player.powered / 6)-64, 50, 64, 64, null);}
 		if(gamePanel.player.hp < 1) {
 			gameOver(graphics2D);
