@@ -32,11 +32,11 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 	public boolean MPressed = false;
 	public boolean spacePressed = false;
 	public boolean enterPressed = false;
-	
+	public boolean ctrlPressed = false;
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int kCode = e.getKeyCode();
-		if(kCode == KeyEvent.VK_Q) {QPressed= true;}
+		if(kCode == KeyEvent.VK_Q) {QPressed = true;}
 		if(kCode == KeyEvent.VK_W) {WPressed = true;}
 		if(kCode == KeyEvent.VK_E) {EPressed = true;}
 		if(kCode == KeyEvent.VK_R) {RPressed = true;}
@@ -64,6 +64,7 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_M) {MPressed = true;}
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = true;}
 		if(kCode == KeyEvent.VK_ENTER) {enterPressed = true;}
+		if(kCode == KeyEvent.VK_CONTROL) {ctrlPressed = true;}
 	}
 	
 	@Override
@@ -97,5 +98,6 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_M) {MPressed = false;}
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = false;}
 		if(kCode == KeyEvent.VK_ENTER) {enterPressed = false;}
+		if(kCode == KeyEvent.VK_CONTROL) {ctrlPressed = false;}
 	}
 }

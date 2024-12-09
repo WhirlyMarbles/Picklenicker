@@ -1,41 +1,32 @@
 package main;
 
-import entity.Entity;
-import entity.Pickle;
-import entity.Player;
-import entity.PowerUp;
+import entity.*;
 import logger.Logger;
 import mouse.MouseHandler;
-import ui.PicklenickerUserInterface;
+import ui.PicklenickerUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.prefs.Preferences;
 
 public class GamePanel extends JPanel implements Runnable {
 	// user prefs
 	Preferences prefs = Preferences.userNodeForPackage(Picklenicker.class);
 	
-	//yey
 	public JFrame window;
 	
-	// pnread
 	HashMap<String, Integer> difficultySettings = new HashMap<>();
 	
 	// log
-	Logger LOGGER;
+	Logger logger;
 	
 	public MouseHandler mouseHandler;
-	
-	public boolean running = true;
-	public boolean gameStarted = false;
-	
-	// ui
-	public PicklenickerUserInterface ui;
 	
 	// handle keys
 	public KeyHandler keyHandler = new KeyHandler();
@@ -45,16 +36,21 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int SCREEN_WIDTH = SCREEN_SIZE[0];
 	public final int SCREEN_HEIGHT = SCREEN_SIZE[1];
 	
+	public PicklenickerUI pnUI = new PicklenickerUI(this);
+	
 	public int highscore;
+	
+	public GameState gameState = GameState.TITLE;
 	
 	// thread vars
 	double FPS = 240;
 	
+	public boolean debug = false;
+	
 	// player vars yay!!!!!!!!!!
 	public Player player;
 	// pickle var!!!!!!!!!!!
-	public ArrayList<Entity> pickles = new ArrayList<>();
-	PickleAdmin pickleInit;
+	public ArrayList<Pickle> pickles = new ArrayList<>();
 	
 	@Override
 	public void run() {
@@ -77,12 +73,15 @@ public class GamePanel extends JPanel implements Runnable {
 				paintCount++;
 			}
 			if(timer >= 1000000000) {
-				if(keyHandler.TPressed){System.out.println("TPS: " + paintCount);}
+				if(debug){
+					logger.debug("TPS: " + paintCount);}
 				paintCount = 0;
 				timer = 0;
 			}
 		}
 	}
+	
+	BufferedImage pickleImg;
 	
 	public void addWindow(JFrame w) {
 		window = w;
@@ -106,90 +105,54 @@ public class GamePanel extends JPanel implements Runnable {
 		this.difficultySettings.put("hard", 10);
 		this.difficulty = "normal";
 		
-		this.ui = new PicklenickerUserInterface(this);
-		this.LOGGER = new Logger("game panel");
-		this.LOGGER.debug("testing local logger");
+		this.logger = new Logger("game panel");
+		this.logger.debug("testing local logger");
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(new Color(128, 128, 255));
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyHandler);
 		this.setFocusable(true);
 		
-		this.player = new Player(this, this.keyHandler);
-	}
-	public void startGame() {
-		if(difficulty.equals("HACKED")) {
-			player.MAX_HP = 1000;
+		this.pickleImg = null;
+		try {
+			pickleImg = ImageIO.read(getClass().getResourceAsStream("/img/pickle/0.png"));
 		}
-		gameStarted = true;
-		pickles = new ArrayList<>();
-		pickleInit = new PickleAdmin(this, difficultySettings.get(difficulty));
-		player.hp = player.MAX_HP;
+		catch(IOException error) {
+			logger.warn("cant load pickle image");
+		}
+		reset();
 	}
 	public void update() {
 		if (keyHandler.BPressed) {
 			System.exit(0);
 		}
-		if(running && gameStarted) {
+		debug = keyHandler.TPressed;
+		if(gameState == GameState.GAME || gameState == GameState.GAME_OVER) {
 			prefs.putInt("highscore", Math.max(player.points, highscore));
 			highscore = prefs.getInt("highscore", 0);
 			player.update();
-			ArrayList<Pickle> toAdd = new ArrayList<>();
-			synchronized (pickles) {
-				Iterator<Entity> iterator = pickles.iterator();
-				while (iterator.hasNext()) {
-					Entity pickle = iterator.next();
-					pickle.update();
-					if (pickle.hitbox.intersects(player.hitbox) && pickle instanceof Pickle) {
-						iterator.remove(); // Safe removal using Iterator
-						int randomee = pickleInit.randomE.nextInt(1,3);
-						for(int i = 0; i<randomee; i++) {
-							toAdd.add(pickleInit.getPickle());
-						}
-						player.points++;
-					} else if (pickle.hitbox.y >= SCREEN_HEIGHT && pickle instanceof Pickle) {
-						iterator.remove(); // Safe removal using Iterator
-						int randomee = pickleInit.randomE.nextInt(1,3);
-						for(int i = 0; i<randomee;i++) {
-							toAdd.add(pickleInit.getPickle());
-						}
-						if(player.powered==0){
-							player.hp--;
-						}
-					}
-					if (pickle.hitbox.intersects(player.hitbox) && pickle instanceof PowerUp) {
-						pickle.power(true);
-					}
-					else if (pickle.hitbox.y >= SCREEN_HEIGHT && pickle instanceof PowerUp) {
-						pickle.power(false);
-					}
-				}
-			}
-			synchronized (pickles) {
-				pickles.addAll(toAdd); // Add new pickles after the iterations
+			for (int i = 0; i < pickles.size(); i++) {
+				pickles.get(i).update();
 			}
 		}
 	}
 	public void reset() {
 		pickles = new ArrayList<>();
+		for(int i = 0;i < difficultySettings.get(difficulty);i++) {
+			pickles.add(new Pickle(this, keyHandler, pickleImg));
+		}
 		player = new Player(this, keyHandler);
-		pickleInit = new PickleAdmin(this, difficultySettings.get(difficulty));
-		running = true;
-		gameStarted = false;
 	}
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 		Graphics2D graphics2D = (Graphics2D) graphics;
-		if(gameStarted) {
-			synchronized (pickles) {
-				player.draw(graphics2D);
-				for (Entity pickle : pickles) {
-					pickle.draw(graphics2D);
-				}
+		if(gameState == GameState.GAME || gameState == GameState.GAME_OVER) {
+			player.draw(graphics2D);
+			for (int i = 0; i < pickles.size(); i++) {
+				pickles.get(i).draw(graphics2D);
 			}
-			ui.drawGameScreen(graphics2D);
 		}
-		else {ui.drawTitleScreen(graphics2D);}
+		pnUI.drawUI(graphics2D);
 		
 		graphics2D.dispose();
 	}

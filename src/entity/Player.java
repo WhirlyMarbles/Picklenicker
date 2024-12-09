@@ -2,7 +2,9 @@ package entity;
 
 import logger.Logger;
 import main.GamePanel;
+import main.GameState;
 import main.KeyHandler;
+import ui.PNGameOverScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,7 +22,6 @@ public class Player extends Entity {
 	
 	Logger LOGGER;
 	
-	GamePanel gamePanel;
 	KeyHandler keyHandler;
 	public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 		this.LOGGER = new Logger("player");
@@ -32,7 +33,10 @@ public class Player extends Entity {
 		init();
 	}
 	public void draw(Graphics2D graphics2D) {
-		if(keyHandler.TPressed) {
+		if(keyHandler.ctrlPressed) {
+			drawDebug(graphics2D);
+		}
+		if(gamePanel.debug) {
 			graphics2D.setColor(new Color(0, 255, 0, 128));
 			graphics2D.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 		}
@@ -60,6 +64,10 @@ public class Player extends Entity {
 		}
 	}
 	public void update() {
+		if(hp <= 0 && gamePanel.gameState != GameState.GAME_OVER) {
+			gamePanel.gameState = GameState.GAME_OVER;
+			gamePanel.pnUI.pngos.reset();
+		}
 		if(keyHandler.DPressed) {direction = "right";}
 		if(keyHandler.APressed) {direction = "left";}
 		if(powered>0) {speed=6;powered--;}else{speed=4;}
@@ -73,7 +81,7 @@ public class Player extends Entity {
 		}
 		sync();
 		if(hitbox.x > gamePanel.SCREEN_WIDTH) {
-			x = gamePanel.SCREEN_WIDTH;
+			x = -hitbox.width;
 			sync();
 		}
 		if(hitbox.x < -hitbox.width) {

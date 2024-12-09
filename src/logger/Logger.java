@@ -7,6 +7,27 @@ public class Logger {
 	private final String RESET_BOLD = "\033[0m";
 	String id;
 	public ArrayList<String> logs = new ArrayList<>();
+	public static void log(String msg, boolean debug) {
+		String s = "";
+		if(debug){s = "[DEBUGGER]: ";}
+		ColoredOutput.printText(s, "cyan", "");
+		ColoredOutput.printText(msg + "\n", "black", "white");
+	}
+	public static void log(String msg) {
+		ColoredOutput.printText("LOG-> ", "cyan", "");
+		ColoredOutput.printText(msg + "\n", "black", "white");
+	}
+	public static void log(int msg) {
+		ColoredOutput.printText("LOG-> ", "cyan", "");
+		ColoredOutput.printText(msg + "\n", "black", "white");
+	}
+	
+	public static void log(int msg, boolean debug) {
+		String s = "";
+		if(debug){s = "[DEBUGGER]: ";}
+		ColoredOutput.printText(s, "cyan", "");
+		ColoredOutput.printText(msg + "\n", "black", "white");
+	}
 	public Logger(String loggerid) {
 		id = loggerid;
 	}

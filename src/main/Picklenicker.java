@@ -15,7 +15,7 @@ public class Picklenicker {
 		try {
 			icon = Toolkit.getDefaultToolkit().getImage(Picklenicker.class.getResource("/img/logo.png"));
 		} catch (Exception error) {
-			logger.warn("cannot load icon immage");
+			logger.warn("cannot load icon image");
 		}
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
