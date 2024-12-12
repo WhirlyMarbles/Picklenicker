@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.prefs.Preferences;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -20,8 +19,6 @@ public class GamePanel extends JPanel implements Runnable {
 	Preferences prefs = Preferences.userNodeForPackage(Picklenicker.class);
 	
 	public JFrame window;
-	
-	HashMap<String, Integer> difficultySettings = new HashMap<>();
 	
 	// log
 	Logger logger;
@@ -52,10 +49,12 @@ public class GamePanel extends JPanel implements Runnable {
 	// pickle var!!!!!!!!!!!
 	public ArrayList<Pickle> pickles = new ArrayList<>();
 	
+	public Difficulty difficulty;
+	
 	@Override
 	public void run() {
 		double drawInterval = 1000000000/FPS;
-		double Δ = 0;
+		double delta = 0;
 		long lastPaint = System.nanoTime();
 		long currentPaint;
 		long timer = 0;
@@ -63,13 +62,13 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		while(thread != null) {
 			currentPaint = System.nanoTime();
-			Δ += (currentPaint - lastPaint) / drawInterval;
+			delta += (currentPaint - lastPaint) / drawInterval;
 			timer += (currentPaint - lastPaint);
 			lastPaint = currentPaint;
-			if(Δ >= 1) {
+			if(delta >= 1) {
 				update();
 				repaint();
-				Δ--;
+				delta--;
 				paintCount++;
 			}
 			if(timer >= 1000000000) {
@@ -92,18 +91,12 @@ public class GamePanel extends JPanel implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-	public String difficulty;
 	public GamePanel() {
-		this.difficulty = prefs.get("difficulty", "normal");
 		this.highscore = prefs.getInt("highscore", 0);
+		this.difficulty = Difficulty.fromString(this.prefs.get("difficulty", "normal"));
 		
 		this.mouseHandler = new MouseHandler();
 		this.addMouseListener(mouseHandler);
-		
-		this.difficultySettings.put("easy", 3);
-		this.difficultySettings.put("normal", 6);
-		this.difficultySettings.put("hard", 10);
-		this.difficulty = "normal";
 		
 		this.logger = new Logger("game panel");
 		this.logger.debug("testing local logger");
@@ -138,11 +131,14 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	public void reset() {
+		player = new Player(this, keyHandler);
+	}
+	public void startGame() {
+		gameState = GameState.GAME;
 		pickles = new ArrayList<>();
-		for(int i = 0;i < difficultySettings.get(difficulty);i++) {
+		for(int i = 0;i < difficulty.get();i++) {
 			pickles.add(new Pickle(this, keyHandler, pickleImg));
 		}
-		player = new Player(this, keyHandler);
 	}
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);

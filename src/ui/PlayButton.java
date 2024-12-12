@@ -21,6 +21,6 @@ public class PlayButton extends Button {
 		}
 	}
 	public void onclick() {
-		gamePanel.gameState = GameState.GAME;
+		gamePanel.startGame();
 	}
 }

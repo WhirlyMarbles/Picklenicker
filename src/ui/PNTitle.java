@@ -16,8 +16,10 @@ public class PNTitle {
 	GamePanel gamePanel;
 	int pnImgW = 512;
 	int pnImgH = 128;
+	DifficultyModerator difficultyModerator;
 	public PNTitle(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
+		this.difficultyModerator = new DifficultyModerator(gamePanel);
 		try {
 			picklenicker = ImageIO.read(getClass().getResourceAsStream("/img/ui/picklenicker.png"));
 		}
@@ -33,6 +35,7 @@ public class PNTitle {
 		int pnx = (gamePanel.SCREEN_WIDTH - pnImgW) / 2;
 		int pny = (gamePanel.SCREEN_HEIGHT / 3) - pnImgH / 2;
 		graphics2D.drawImage(picklenicker, pnx, pny, pnImgW, pnImgH, null);
+		difficultyModerator.draw(graphics2D);
 		if(gamePanel.keyHandler.ctrlPressed) {
 			graphics2D.setColor(new Color(128, 255, 128));
 			graphics2D.drawLine(0, pny, gamePanel.SCREEN_WIDTH, pny);
