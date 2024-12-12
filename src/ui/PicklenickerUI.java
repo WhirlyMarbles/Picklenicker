@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class PicklenickerUI {
+	Font courier = new Font("Courier New", Font.BOLD, 30);
 	GamePanel gamePanel;
 	PNTitle title;
 	BufferedImage heart;
@@ -31,11 +32,12 @@ public class PicklenickerUI {
 	}
 	public void drawGameOver(Graphics2D graphics2D) {
 		pngos.draw(graphics2D);
+		drawPoints(graphics2D);
 	}
 	public void drawTitle(Graphics2D graphics2D) {
 		title.draw(graphics2D);
 	}
-	public void drawGameUI(Graphics2D graphics2D) {
+	private void drawGameUI(Graphics2D graphics2D) {
 		int heartSize = 16;
 		BufferedImage heartImg = heart;
 		int x = 0;
@@ -48,6 +50,7 @@ public class PicklenickerUI {
 			if(x>gamePanel.SCREEN_WIDTH-heartSize) {x=0;y+=heartSize;}
 			else{x+=heartSize;}
 		}
+		drawPoints(graphics2D);
 		if(gamePanel.keyHandler.ctrlPressed) {
 			graphics2D.setColor(new Color(255, 0, 0));
 			graphics2D.drawLine(0, heartSize, gamePanel.SCREEN_WIDTH, heartSize);
@@ -61,6 +64,18 @@ public class PicklenickerUI {
 			graphics2D.setColor(new Color(255, 255, 255));
 			graphics2D.fillRect(0, 0, heartSize * gamePanel.player.hp, heartSize);
 		}
+	}
+	private void drawPoints(Graphics2D graphics2D) {
+		graphics2D.setColor(Color.black);
+		int x1, y1, x2, y2;
+		graphics2D.setFont(courier);
+		FontMetrics fontM = graphics2D.getFontMetrics();
+		x1 = gamePanel.SCREEN_WIDTH - fontM.stringWidth("Points: " + gamePanel.player.points) - 10;
+		y1 = fontM.getAscent();
+		graphics2D.drawString("Points: "+gamePanel.player.points, x1, y1);
+		x2 = gamePanel.SCREEN_WIDTH - fontM.stringWidth("High: " + gamePanel.highscore) - 10;
+		y2 = y1 * 2;
+		graphics2D.drawString("High: "+gamePanel.highscore, x2, y2);
 	}
 	public void drawUI(Graphics2D graphics2D) {
 		switch(gamePanel.gameState) {

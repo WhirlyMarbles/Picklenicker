@@ -4,7 +4,6 @@ import logger.Logger;
 import main.GamePanel;
 import main.GameState;
 import main.KeyHandler;
-import ui.PNGameOverScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -68,6 +67,7 @@ public class Player extends Entity {
 			gamePanel.gameState = GameState.GAME_OVER;
 			gamePanel.pnUI.pngos.reset();
 		}
+		if(keyHandler.RPressed) {points = 0;gamePanel.highscore = 0;}
 		if(keyHandler.DPressed) {direction = "right";}
 		if(keyHandler.APressed) {direction = "left";}
 		if(powered>0) {speed=6;powered--;}else{speed=4;}

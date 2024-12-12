@@ -126,8 +126,9 @@ public class GamePanel extends JPanel implements Runnable {
 		if (keyHandler.BPressed) {
 			System.exit(0);
 		}
+		if(keyHandler.RPressed){highscore = 0;}
 		debug = keyHandler.TPressed;
-		if(gameState == GameState.GAME || gameState == GameState.GAME_OVER) {
+		if(gameState == GameState.GAME) {
 			prefs.putInt("highscore", Math.max(player.points, highscore));
 			highscore = prefs.getInt("highscore", 0);
 			player.update();

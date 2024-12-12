@@ -33,7 +33,7 @@ public class Pickle extends Entity {
 		if(keyHandler.ctrlPressed) {
 			drawDebug(graphics2D);
 		}
-		if(gamePanel.debug) {
+		if(gamePanel.debug || hitbox.contains(gamePanel.mouseHandler.getMousePosInWindow(gamePanel.window))) {
 			graphics2D.setColor(new Color(0, 255, 0, 128));
 			graphics2D.fillRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 		}
