@@ -59,7 +59,7 @@ public class Pickle extends Entity {
 	public void spawnPicklesAndReset() {
 		reset();
 		for(int i=0;i<randomE.nextInt(0, 3);i++) {
-			gamePanel.pickles.add(new Pickle(gamePanel, gamePanel.keyHandler, image));
+			gamePanel.pickles.add(new Pickle(gamePanel, image));
 		}
 	}
 	private void reset() {
