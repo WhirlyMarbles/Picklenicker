@@ -71,8 +71,19 @@ public class PicklenickerUI {
 		}
 	}
 	private void drawPlayerPower(Graphics2D graphics2D) {
+		if(gamePanel.debug) {
+			graphics2D.setColor(new Color(196, 196, 196));
+			graphics2D.fillRect(0, 50, gamePanel.player.powered / 6, 50);
+		}
 		graphics2D.drawImage(powerRect, 0, 50, gamePanel.player.powered / 6 - 25, 50, null);
 		graphics2D.drawImage(powerOval, gamePanel.player.powered / 6 - 50, 50, 50, 50, null);
+		if(gamePanel.keyHandler.ctrlPressed) {
+			graphics2D.setColor(Color.RED);
+			graphics2D.drawLine(0, 50, gamePanel.player.powered / 6, 50);
+			graphics2D.drawLine(0, 75, gamePanel.player.powered / 6, 75);
+			graphics2D.drawLine(0, 100, gamePanel.player.powered / 6, 100);
+			graphics2D.drawLine(gamePanel.player.powered / 6, 50, gamePanel.player.powered / 6, 100);
+		}
 	}
 	private void drawPoints(Graphics2D graphics2D) {
 		graphics2D.setColor(Color.black);
