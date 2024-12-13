@@ -38,6 +38,7 @@ public class PicklenickerUI {
 		title.draw(graphics2D);
 	}
 	private void drawGameUI(Graphics2D graphics2D) {
+		drawPlayerPower(graphics2D);
 		int heartSize = 16;
 		BufferedImage heartImg = heart;
 		int x = 0;
@@ -64,6 +65,10 @@ public class PicklenickerUI {
 			graphics2D.setColor(new Color(255, 255, 255));
 			graphics2D.fillRect(0, 0, heartSize * gamePanel.player.hp, heartSize);
 		}
+	}
+	private void drawPlayerPower(Graphics2D graphics2D) {
+		graphics2D.setColor(new Color(64, 64, 255));
+		graphics2D.fillRect(0, 50, gamePanel.player.powered / 6, 50);
 	}
 	private void drawPoints(Graphics2D graphics2D) {
 		graphics2D.setColor(Color.black);

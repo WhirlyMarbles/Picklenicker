@@ -21,7 +21,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public JFrame window;
 	
 	// log
-	Logger logger;
+	private Logger logger;
+	public Logger getLogger(){return(logger);}
 	
 	public MouseHandler mouseHandler;
 	
@@ -47,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// player vars yay!!!!!!!!!!
 	public Player player;
 	// pickle var!!!!!!!!!!!
-	public ArrayList<Pickle> pickles = new ArrayList<>();
+	public ArrayList<Entity> pickles = new ArrayList<>();
 	
 	public Difficulty difficulty;
 	
@@ -139,6 +140,7 @@ public class GamePanel extends JPanel implements Runnable {
 		for(int i = 0;i < difficulty.get();i++) {
 			pickles.add(new Pickle(this, keyHandler, pickleImg));
 		}
+		pickles.add(new PowerUp(this));
 	}
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);

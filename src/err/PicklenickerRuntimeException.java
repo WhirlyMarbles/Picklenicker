@@ -1,4 +1,4 @@
-package main;
+package err;
 
 public class PicklenickerRuntimeException extends RuntimeException {
 	public PicklenickerRuntimeException(String message) {

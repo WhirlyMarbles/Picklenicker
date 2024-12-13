@@ -11,7 +11,7 @@ public class Entity {
 	BufferedImage image;
 	public Rectangle hitbox;
 	GamePanel gamePanel;
-	public void update(){}public void draw(Graphics2D graphics2D){}public void power(boolean eaten){};
+	public void update(){}public void draw(Graphics2D graphics2D){}
 	public void drawDebug(Graphics2D graphics2D) {
 		graphics2D.setColor(new Color(128, 255, 128));
 		graphics2D.drawLine(hitbox.x, 0, hitbox.x, gamePanel.SCREEN_HEIGHT);
