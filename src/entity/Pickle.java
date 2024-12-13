@@ -46,9 +46,11 @@ public class Pickle extends Entity {
 			spawnPicklesAndReset();
 			gamePanel.player.points++;
 		}
-		if(hitbox.y >= gamePanel.SCREEN_HEIGHT && gamePanel.player.powered <= 0) {
+		if(hitbox.y >= gamePanel.SCREEN_HEIGHT) {
 			spawnPicklesAndReset();
-			gamePanel.player.hp--;
+			if(gamePanel.player.powered <= 0){
+				gamePanel.player.hp--;
+			}
 		}
 	}
 	public void spawnPicklesAndReset() {

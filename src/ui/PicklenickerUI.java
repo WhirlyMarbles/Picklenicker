@@ -16,6 +16,8 @@ public class PicklenickerUI {
 	BufferedImage noheart;
 	Logger logger = new Logger("pnUI");
 	BufferedImage lol;
+	BufferedImage powerRect;
+	BufferedImage powerOval;
 	public PNGameOverScreen pngos;
 	public PicklenickerUI(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
@@ -25,6 +27,8 @@ public class PicklenickerUI {
 			heart = ImageIO.read(getClass().getResourceAsStream("/img/ui/heart.png"));
 			noheart = ImageIO.read(getClass().getResourceAsStream("/img/ui/noheart.png"));
 			lol = ImageIO.read(getClass().getResourceAsStream("/img/lol/.png"));
+			powerRect =ImageIO.read(getClass().getResourceAsStream("/img/powerup/str.png"));
+			powerOval =ImageIO.read(getClass().getResourceAsStream("/img/powerup/.png"));
 		}
 		catch(IOException error) {
 			logger.warn("cannot import ui symbols");
@@ -67,8 +71,8 @@ public class PicklenickerUI {
 		}
 	}
 	private void drawPlayerPower(Graphics2D graphics2D) {
-		graphics2D.setColor(new Color(64, 64, 255));
-		graphics2D.fillRect(0, 50, gamePanel.player.powered / 6, 50);
+		graphics2D.drawImage(powerRect, 0, 50, gamePanel.player.powered / 6 - 25, 50, null);
+		graphics2D.drawImage(powerOval, gamePanel.player.powered / 6 - 50, 50, 50, 50, null);
 	}
 	private void drawPoints(Graphics2D graphics2D) {
 		graphics2D.setColor(Color.black);
