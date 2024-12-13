@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public JFrame window;
 	
 	// log
-	private Logger logger;
+	private final Logger logger;
 	public Logger getLogger(){return(logger);}
 	
 	public MouseHandler mouseHandler;
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable {
 		gameState = GameState.GAME;
 		pickles = new ArrayList<>();
 		for(int i = 0;i < difficulty.get();i++) {
-			pickles.add(new Pickle(this, keyHandler, pickleImg));
+			pickles.add(new Pickle(this, pickleImg));
 		}
 		pickles.add(new PowerUp(this));
 	}

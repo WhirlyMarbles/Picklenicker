@@ -1,6 +1,5 @@
 package entity;
 
-import logger.Logger;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -8,18 +7,22 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/**
+ * Class Pickle - extends Entity
+ * Constructor receives GamePanel and image
+ * @see entity.Entity
+ * @see main.GamePanel
+ * */
 public class Pickle extends Entity {
-	Logger logger = new Logger("pickle");
-	
 	Random randomE = new Random();
 	BufferedImage image;
 	KeyHandler keyHandler;
 	int scale;
-	public Pickle(GamePanel gamePanel, KeyHandler keyHandler, BufferedImage image) {
+	public Pickle(GamePanel gamePanel, BufferedImage image) {
 		this.scale = randomE.nextInt(16, 48);
 		int y = randomE.nextInt(-1024, -(this.scale*2));
 		int x = randomE.nextInt(0, gamePanel.SCREEN_WIDTH-this.scale);
-		this.keyHandler = keyHandler;
+		this.keyHandler = gamePanel.keyHandler;
 		this.gamePanel = gamePanel;
 		
 		this.image = image;
