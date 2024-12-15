@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
+	
 	public int points = 0;
 	public int MAX_HP = 20;
 	public int hp = MAX_HP;
