@@ -11,14 +11,21 @@ import java.io.IOException;
 public class PicklenickerUI {
 	Font courier = new Font("Courier New", Font.BOLD, 30);
 	GamePanel gamePanel;
+	int gayY;
 	PNTitle title;
 	BufferedImage heart;
 	BufferedImage noheart;
 	Logger logger = new Logger("pnUI");
 	BufferedImage lol;
-	BufferedImage powerRect;
-	BufferedImage powerOval;
 	public PNGameOverScreen pngos;
+	private final Color[] gaycolors = new Color[] {
+			new Color(255, 0, 0),
+			new Color(255, 128, 0),
+			new Color(255, 255, 0),
+			new Color(0, 255, 0),
+			new Color(0, 0, 255),
+			new Color(117, 7, 135)
+	};
 	public PicklenickerUI(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 		this.pngos = new PNGameOverScreen(gamePanel);
@@ -27,8 +34,6 @@ public class PicklenickerUI {
 			heart = ImageIO.read(getClass().getResourceAsStream("/img/ui/heart.png"));
 			noheart = ImageIO.read(getClass().getResourceAsStream("/img/ui/noheart.png"));
 			lol = ImageIO.read(getClass().getResourceAsStream("/img/lol/.png"));
-			powerRect =ImageIO.read(getClass().getResourceAsStream("/img/powerup/str.png"));
-			powerOval =ImageIO.read(getClass().getResourceAsStream("/img/powerup/.png"));
 		}
 		catch(IOException error) {
 			logger.warn("cannot import ui symbols");
@@ -75,8 +80,14 @@ public class PicklenickerUI {
 			graphics2D.setColor(new Color(196, 196, 196));
 			graphics2D.fillRect(0, 50, gamePanel.player.powered / 6, 50);
 		}
-		graphics2D.drawImage(powerRect, 0, 50, gamePanel.player.powered / 6 - 25, 50, null);
-		graphics2D.drawImage(powerOval, gamePanel.player.powered / 6 - 50, 50, 50, 50, null);
+		gayY = 50;
+		for(Color color : gaycolors) {
+			graphics2D.setColor(color);
+			for(int i=0;i<gamePanel.player.powered / 6;i++) {
+				graphics2D.fillRect(i, gayY + (int) (4 * Math.sin((float)i / 6)), 1, 10);
+			}
+			gayY += 10;
+		}
 		if(gamePanel.keyHandler.ctrlPressed) {
 			graphics2D.setColor(Color.RED);
 			graphics2D.drawLine(0, 50, gamePanel.player.powered / 6, 50);
