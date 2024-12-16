@@ -70,8 +70,8 @@ public class Player extends Entity {
 			gamePanel.pnUI.pngos.reset();
 		}
 		if(keyHandler.RPressed) {points = 0;gamePanel.highscore = 0;}
-		if(keyHandler.DPressed) {direction = "right";}
-		if(keyHandler.APressed) {direction = "left";}
+		if(keyHandler.DPressed || keyHandler.rightPressed) {direction = "right";}
+		if(keyHandler.APressed || keyHandler.leftPressed) {direction = "left";}
 		if(powered>0) {speed=6;powered--;}else{speed=4;}
 		switch(direction) {
 			case "right":

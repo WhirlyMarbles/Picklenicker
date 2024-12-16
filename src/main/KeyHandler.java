@@ -33,6 +33,8 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 	public boolean spacePressed = false;
 	public boolean enterPressed = false;
 	public boolean ctrlPressed = false;
+	public boolean rightPressed = false;
+	public boolean leftPressed = false;
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int kCode = e.getKeyCode();
@@ -65,6 +67,8 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = true;}
 		if(kCode == KeyEvent.VK_ENTER) {enterPressed = true;}
 		if(kCode == KeyEvent.VK_CONTROL) {ctrlPressed = true;}
+		if(kCode == KeyEvent.VK_RIGHT) {rightPressed = true;}
+		if(kCode == KeyEvent.VK_LEFT) {leftPressed = true;}
 	}
 	
 	@Override
@@ -99,5 +103,7 @@ public class KeyHandler implements KeyListener {@Override public void keyTyped(K
 		if(kCode == KeyEvent.VK_SPACE) {spacePressed = false;}
 		if(kCode == KeyEvent.VK_ENTER) {enterPressed = false;}
 		if(kCode == KeyEvent.VK_CONTROL) {ctrlPressed = false;}
+		if(kCode == KeyEvent.VK_RIGHT) {rightPressed = false;}
+		if(kCode == KeyEvent.VK_LEFT) {leftPressed = false;}
 	}
 }
