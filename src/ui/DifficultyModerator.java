@@ -1,5 +1,6 @@
 package ui;
 
+import main.Difficulty;
 import main.GamePanel;
 
 import javax.swing.*;
@@ -54,6 +55,10 @@ public class DifficultyModerator {
 		if(gamePanel.mouseHandler.mousePressed && hitbox.contains(gamePanel.mouseHandler.getMousePosInWindow(
 				gamePanel.window))) {
 			gamePanel.difficulty = gamePanel.difficulty.next();
+			gamePanel.prefs.put("difficulty", gamePanel.difficulty.name());
+		}
+		if(gamePanel.keyHandler.HPressed) {
+			gamePanel.difficulty = Difficulty.HACKED;
 		}
 	}
 }

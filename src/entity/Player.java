@@ -11,10 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity {
-	
 	public int points = 0;
-	public int MAX_HP = 20;
-	public int hp = MAX_HP;
+	public int MAX_HP;
+	public int hp;
 	public BufferedImage left, right;
 	public String direction = "";
 	
@@ -23,7 +22,9 @@ public class Player extends Entity {
 	Logger LOGGER;
 	
 	KeyHandler keyHandler;
-	public Player(GamePanel gamePanel, KeyHandler keyHandler) {
+	public Player(GamePanel gamePanel, KeyHandler keyHandler, int maxhp) {
+		this.MAX_HP = maxhp;
+		this.hp = MAX_HP;
 		this.LOGGER = new Logger("player");
 		LOGGER.info("building player class");
 		

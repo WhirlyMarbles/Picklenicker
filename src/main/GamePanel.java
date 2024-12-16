@@ -1,6 +1,7 @@
 package main;
 
 import entity.*;
+import explosion.ExplosionHandler;
 import logger.Logger;
 import mouse.MouseHandler;
 import ui.PicklenickerUI;
@@ -16,7 +17,7 @@ import java.util.prefs.Preferences;
 
 public class GamePanel extends JPanel implements Runnable {
 	// user prefs
-	Preferences prefs = Preferences.userNodeForPackage(Picklenicker.class);
+	public Preferences prefs = Preferences.userNodeForPackage(Picklenicker.class);
 	
 	public JFrame window;
 	
@@ -33,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int[] SCREEN_SIZE = new int[] {1000, 600};
 	public final int SCREEN_WIDTH = SCREEN_SIZE[0];
 	public final int SCREEN_HEIGHT = SCREEN_SIZE[1];
+	
+	public ExplosionHandler explosionHandler = new ExplosionHandler(this);
 	
 	public PicklenickerUI pnUI = new PicklenickerUI(this);
 	
@@ -114,7 +117,6 @@ public class GamePanel extends JPanel implements Runnable {
 		catch(IOException error) {
 			logger.warn("cant load pickle image");
 		}
-		reset();
 	}
 	public void update() {
 		if (keyHandler.BPressed) {
@@ -132,15 +134,27 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	public void reset() {
-		player = new Player(this, keyHandler);
+		int hp = 20;
+		if(difficulty == Difficulty.HACKED) {hp = 400;}
+		player = new Player(this, keyHandler, hp);
 	}
 	public void startGame() {
+		reset();
 		gameState = GameState.GAME;
 		pickles = new ArrayList<>();
 		for(int i = 0;i < difficulty.get();i++) {
-			pickles.add(new Pickle(this, pickleImg));
+			pickles.add(new Pickle(this));
 		}
 		pickles.add(new PowerUp(this));
+		pickles.add(new Bomb(this));
+	}
+	public void boom() {
+		pickles = new ArrayList<>();
+		for(int i = 0;i < difficulty.get();i++) {
+			pickles.add(new Pickle(this));
+		}
+		pickles.add(new PowerUp(this));
+		pickles.add(new Bomb(this));
 	}
 	public void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
@@ -150,9 +164,9 @@ public class GamePanel extends JPanel implements Runnable {
 			for (int i = 0; i < pickles.size(); i++) {
 				pickles.get(i).draw(graphics2D);
 			}
+			explosionHandler.updateAndDraw(graphics2D);
 		}
 		pnUI.drawUI(graphics2D);
-		
 		graphics2D.dispose();
 	}
 }

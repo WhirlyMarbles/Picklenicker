@@ -21,7 +21,6 @@ public class BackToTitleButton extends Button {
 		}
 	}
 	public void onclick() {
-		gamePanel.reset();
 		gamePanel.gameState = GameState.TITLE;
 	}
 }

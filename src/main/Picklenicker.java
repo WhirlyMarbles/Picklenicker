@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Picklenicker {
 	static Logger logger;
-	static final String VERSION = "2.0.8";
+	static final String VERSION = "2.0.9";
 	static Image icon;
 	public static void main(String[] args) {
 		logger = new Logger("main");

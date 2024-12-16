@@ -1,10 +1,13 @@
 package entity;
 
+import logger.Logger;
 import main.GamePanel;
 import main.KeyHandler;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -26,6 +29,25 @@ public class Pickle extends Entity {
 		this.gamePanel = gamePanel;
 		
 		this.image = image;
+		this.hitbox = new Rectangle();
+		this.hitbox.x = x;this.hitbox.y = y;
+		
+		this.x = x;this.y = y;this.hitbox.width=this.scale/2;this.hitbox.height=this.scale/2*3;
+		this.speed = randomE.nextDouble(0.01, 1.60);
+	}
+	public Pickle(GamePanel gamePanel) {
+		this.scale = randomE.nextInt(16, 48);
+		int y = randomE.nextInt(-1024, -(this.scale*2));
+		int x = randomE.nextInt(0, gamePanel.SCREEN_WIDTH-this.scale);
+		this.keyHandler = gamePanel.keyHandler;
+		this.gamePanel = gamePanel;
+		
+		try {
+			this.image = ImageIO.read(getClass().getResourceAsStream("/img/pickle/0.png"));
+		}
+		catch(IOException error) {
+			Logger.log("Cannot import pickle image file, <class Pickle> " + this);
+		}
 		this.hitbox = new Rectangle();
 		this.hitbox.x = x;this.hitbox.y = y;
 		

@@ -96,6 +96,10 @@ public class PicklenickerUI {
 			graphics2D.drawLine(gamePanel.player.powered / 6, 50, gamePanel.player.powered / 6, 100);
 		}
 	}
+	
+	/**
+	 * @param graphics2D receives the graphics2D object to be drawn on
+	 */
 	private void drawPoints(Graphics2D graphics2D) {
 		graphics2D.setColor(Color.black);
 		int x1, y1, x2, y2;
