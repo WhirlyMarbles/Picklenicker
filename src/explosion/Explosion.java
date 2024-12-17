@@ -22,7 +22,7 @@ public class Explosion {
 		oval.draw(graphics2D, lifetime);
 	}
 	private Color getColor() {
-		int alpha = 255-((255 * lifetime) / MAX_LIFETIME);
+		int alpha = Math.max(Math.min(255-((255 * lifetime) / MAX_LIFETIME), 255), 0);
 		return(new Color(255, 255, 255, alpha));
 	}
 	

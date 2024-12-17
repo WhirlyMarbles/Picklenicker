@@ -17,17 +17,16 @@ public class ExplosionHandler {
 	}
 	public void updateAndDraw(Graphics2D graphics2D) {
 		explosions = optimize();
+		if(mouseExplosion != null){mouseExplosion.drawAndUpdate(graphics2D);
+			if(mouseExplosion.lifetime >= Explosion.MAX_LIFETIME) {mouseExplosion = null;}
+			}
 		for(int i = 0;i < explosions.size();i++) {
 			explosions.get(i).drawAndUpdate(graphics2D);
 			if(explosions.get(i).lifetime >= Explosion.MAX_LIFETIME) {
 				explosions.set(i, null);
 			}
 		}
-		if(mouseExplosion != null) {
-			if(mouseExplosion.lifetime >= Explosion.MAX_LIFETIME) {mouseExplosion = null;}
-			else {mouseExplosion.drawAndUpdate(graphics2D);}
-		}
-		else if(gamePanel.mouseHandler.mousePressed) {
+		if(gamePanel.mouseHandler.mousePressed) {
 			mouseExplosion = new Explosion(
 					gamePanel.mouseHandler.getMousePosInWindow(gamePanel.window).x,
 					gamePanel.mouseHandler.getMousePosInWindow(gamePanel.window).y,
